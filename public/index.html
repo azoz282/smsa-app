@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMSA Shipment Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="layout-grid">
+        <article class="panel form-panel">
+          <div class="panel-head">
+            <h2>بيانات الصندوق</h2>
+            <p>أدخل الأبعاد والوزن ثم أنشئ الشحنة مباشرة.</p>
+          </div>
+
+          <form id="shipmentForm" class="shipment-form">
+            <div class="form-grid">
+              <label>
+                <span>وصف المحتوى</span>
+                <input
+                  name="contentDescription"
+                  type="text"
+                  value="هدايا"
+                  required
+                />
+              </label>
+              <label>
+                <span>القيمة المصرح بها</span>
+                <input name="declaredValue" type="number" min="1" step="0.01" required />
+              </label>
+              <label>
+                <span>عدد الصناديق</span>
+                <input name="parcels" type="number" min="1" step="1" value="1" />
+              </label>
+              <label>
+                <span>تاريخ الشحن</span>
+                <input name="shipDate" type="datetime-local" />
+              </label>
+              <label>
+                <span>الطول (سم)</span>
+                <input name="lengthCm" type="number" min="1" step="0.1" required />
+              </label>
+              <label>
+                <span>العرض (سم)</span>
+                <input name="widthCm" type="number" min="1" step="0.1" required />
+              </label>
+              <label>
+                <span>الارتفاع (سم)</span>
+                <input name="heightCm" type="number" min="1" step="0.1" required />
+              </label>
+              <label>
+                <span>الوزن (كجم)</span>
+                <input name="actualWeightKg" type="number" min="0" step="0.01" value="0" />
+              </label>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="button primary">إنشاء الشحنة</button>
+            </div>
+          </form>
+        </article>
+      </section>
+
+      <article class="panel response-panel">
+        <div class="panel-head response-head">
+          <h2>نتيجة SMSA</h2>
+          <div id="labelActions" class="label-actions" hidden>
+            <button type="button" id="downloadLabelButton" class="button secondary">
+              تنزيل البوليصة PDF
+            </button>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

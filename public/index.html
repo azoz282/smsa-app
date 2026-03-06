@@ -1,98 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SMSA Shipment Builder</title>
+    <title>بوابة سمسا لإنشاء الشحنات | SMSA Shipment Builder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <main class="page-shell">
-      <section class="layout-grid">
-        <article class="panel form-panel">
-          <div class="panel-head">
-            <h2>بيانات الصندوق</h2>
-            <p>أدخل الأبعاد والوزن ثم أنشئ الشحنة مباشرة.</p>
-          </div>
+</head>
+<body>
+    <div class="background-elements">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
 
-          <form id="shipmentForm" class="shipment-form">
-            <div class="form-grid">
-              <label>
-                <span>رقم الطلب</span>
-                <input name="orderNumber" type="text" value="1000" required />
-              </label>
-              <label>
-                <span>وصف المحتوى</span>
-                <input
-                  name="contentDescription"
-                  type="text"
-                  value="هدايا"
-                  required
-                />
-              </label>
-              <label>
-                <span>القيمة المصرح بها</span>
-                <input name="declaredValue" type="number" min="1" step="0.01" required />
-              </label>
-              <label>
-                <span>HS Code</span>
-                <input name="itemHSCode" type="text" inputmode="numeric" required />
-              </label>
-              <label>
-                <span>بلد المنشأ</span>
-                <input
-                  name="countryOfOrigin"
-                  type="text"
-                  minlength="2"
-                  maxlength="2"
-                  value="SA"
-                  required
-                />
-              </label>
-              <label>
-                <span>الكمية</span>
-                <input name="itemQuantity" type="number" min="1" step="1" value="1" required />
-              </label>
-              <label>
-                <span>عدد الصناديق</span>
-                <input name="parcels" type="number" min="1" step="1" value="1" />
-              </label>
-              <label>
-                <span>تاريخ الشحن</span>
-                <input name="shipDate" type="datetime-local" />
-              </label>
-              <label>
-                <span>الطول (سم)</span>
-                <input name="lengthCm" type="number" min="1" step="0.1" required />
-              </label>
-              <label>
-                <span>العرض (سم)</span>
-                <input name="widthCm" type="number" min="1" step="0.1" required />
-              </label>
-              <label>
-                <span>الارتفاع (سم)</span>
-                <input name="heightCm" type="number" min="1" step="0.1" required />
-              </label>
-              <label>
-                <span>الوزن (كجم)</span>
-                <input name="actualWeightKg" type="number" min="0" step="0.01" value="0" />
-              </label>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fa-solid fa-box-open"></i>
+                <span>بوابة <strong>سمسا</strong> لمرسلي الشحنات</span>
             </div>
+            <nav class="nav-links">
+                <a href="#" class="active"><i class="fa-solid fa-truck-fast"></i> إنشاء شحنة</a>
+                <a href="#"><i class="fa-solid fa-clock-rotate-left"></i> سجل الشحنات</a>
+            </nav>
+        </div>
+    </header>
 
-            <div class="actions">
-              <button type="submit" class="button primary">إنشاء الشحنة</button>
-            </div>
-          </form>
-        </article>
-      </section>
+    <main class="page-shell container">
+        <section class="layout-grid">
+            <article class="panel form-panel glass-effect">
+                <div class="panel-head">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </div>
+                    <div>
+                        <h2>بيانات الشحنة</h2>
+                        <p>أدخل تفاصيل الشحنة، الأبعاد، والوزن لإصدار بوليصة سمسا فوراً.</p>
+                    </div>
+                </div>
+
+                <form id="shipmentForm" class="shipment-form">
+                    <div class="form-section-title">المعلومات الأساسية</div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <i class="fa-solid fa-hashtag input-icon"></i>
+                            <input name="orderNumber" type="text" value="1000" id="orderNumber" required placeholder=" " />
+                            <label for="orderNumber">رقم الطلب</label>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-boxes-packing input-icon"></i>
+                            <input name="contentDescription" type="text" value="هدايا" id="contentDesc" required placeholder=" " />
+                            <label for="contentDesc">وصف المحتوى</label>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-money-bill-wave input-icon"></i>
+                            <input name="declaredValue" type="number" min="1" step="0.01" id="declaredVal" required placeholder=" " />
+                            <label for="declaredVal">القيمة المصرح بها</label>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-barcode input-icon"></i>
+                            <input name="itemHSCode" type="text" inputmode="numeric" id="hsCode" required placeholder=" " />
+                            <label for="hsCode">رمز (HS Code)</label>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-earth-americas input-icon"></i>
+                            <input name="countryOfOrigin" type="text" minlength="2" maxlength="2" value="SA" id="origin" required placeholder=" " />
+                            <label for="origin">بلد المنشأ (SA)</label>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-list-ol input-icon"></i>
+                            <input name="itemQuantity" type="number" min="1" step="1" value="1" id="itemQty" required placeholder=" " />
+                            <label for="itemQty">الكمية</label>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+                    <div class="form-section-title">الأبعاد والوزن</div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <i class="fa-solid fa-cubes input-icon"></i>
+                            <input name="parcels" type="number" min="1" step="1" value="1" id="parcels" placeholder=" " />
+                            <label for="parcels">عدد الصناديق</label>
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-regular fa-calendar-days input-icon"></i>
+                            <input name="shipDate" type="datetime-local" id="shipDate" placeholder=" " />
+                            <label for="shipDate">تاريخ الشحن</label>
+                        </div>
+                        
+                        <div class="dimensions-wrapper">
+                            <div class="input-group mini">
+                                <input name="lengthCm" type="number" min="1" step="0.1" id="lengthCm" required placeholder=" " />
+                                <label for="lengthCm">الطول (سم)</label>
+                            </div>
+                            <span class="x-mark"><i class="fa-solid fa-times"></i></span>
+                            <div class="input-group mini">
+                                <input name="widthCm" type="number" min="1" step="0.1" id="widthCm" required placeholder=" " />
+                                <label for="widthCm">العرض (سم)</label>
+                            </div>
+                            <span class="x-mark"><i class="fa-solid fa-times"></i></span>
+                            <div class="input-group mini">
+                                <input name="heightCm" type="number" min="1" step="0.1" id="heightCm" required placeholder=" " />
+                                <label for="heightCm">الارتفاع (سم)</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group weight-group">
+                            <i class="fa-solid fa-weight-scale input-icon"></i>
+                            <input name="actualWeightKg" type="number" min="0" step="0.01" value="0.5" id="weightKg" placeholder=" " />
+                            <label for="weightKg">الوزن הפعلي (كجم)</label>
+                            <span class="badge-kg">KG</span>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" class="button primary btn-pulse">
+                            <i class="fa-solid fa-paper-plane"></i> إصدار البوليصة
+                        </button>
+                    </div>
+                </form>
+            </article>
+            
+            <aside class="panel info-panel glass-effect">
+                <div class="illustration-box">
+                    <i class="fa-solid fa-boxes-stacked gradient-icon"></i>
+                    <h3>شحن سريع ومضمون</h3>
+                    <p>أدخل البيانات واستلم بوليصة الشحن الخاصة بك بضغطة زر. النظام متصل مباشرة بخوادم سمسا.</p>
+                </div>
+                
+                <div id="resultsArea" class="results-area hidden">
+                    <!-- سيتم حقن النتائج هنا بواسطة app.js إن وجدت -->
+                </div>
+            </aside>
+        </section>
     </main>
 
+    <footer class="site-footer">
+        <p>جميع الحقوق محفوظة &copy; 2024 بوابة الشحن (نسخة مطورة)</p>
+    </footer>
+
     <script src="/app.js"></script>
-  </body>
+</body>
 </html>

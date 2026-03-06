@@ -1,8 +1,6 @@
 const elements = {
   form: document.getElementById("shipmentForm"),
-  shipDateInput: document.querySelector('input[name="shipDate"]'),
-  labelActions: document.getElementById("labelActions"),
-  downloadLabelButton: document.getElementById("downloadLabelButton")
+  shipDateInput: document.querySelector('input[name="shipDate"]')
 };
 
 let latestLabel = null;
@@ -17,14 +15,6 @@ async function bootstrap() {
     await response.json();
   } catch (_error) {}
 }
-
-elements.downloadLabelButton.addEventListener("click", () => {
-  if (!latestLabel) {
-    return;
-  }
-
-  downloadBase64Pdf(latestLabel.base64, latestLabel.filename);
-});
 
 elements.form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -93,13 +83,11 @@ function prepareLabelDownload(smsaResponse) {
     filename: `SMSA-${label.awb || smsaResponse.sawb || "label"}.pdf`
   };
 
-  elements.labelActions.hidden = false;
   downloadBase64Pdf(latestLabel.base64, latestLabel.filename);
 }
 
 function hideLabelDownload() {
   latestLabel = null;
-  elements.labelActions.hidden = true;
 }
 
 function downloadBase64Pdf(base64, filename) {

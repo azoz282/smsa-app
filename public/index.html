@@ -3,222 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>سمسا — بوابة الشحنات</title>
+    <title>SMSA Shipment Builder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-
-    <!-- ========= SIDEBAR ========= -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-mark">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="36" height="36" rx="10" fill="#F58220"/>
-            <path d="M8 13l10-5 10 5v10l-10 5-10-5V13z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M18 8v20M8 13l10 5 10-5" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="logo-text">سمسا<span class="logo-sub">شحن</span></span>
-      </div>
-
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
-          <span class="nav-icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l7 4v6c0 4.4-3 8.5-7 9.9C8 20.5 5 16.4 5 12V6l7-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          </span>
-          <span class="nav-label">إنشاء شحنة</span>
-          <span class="nav-dot"></span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">
-            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
-          </span>
-          <span class="nav-label">لوحة التحكم</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </span>
-          <span class="nav-label">سجل الشحنات</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="nav-icon">
-            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </span>
-          <span class="nav-label">تتبع شحنة</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="user-card">
-          <div class="user-avatar">ع</div>
-          <div class="user-info">
-            <span class="user-name">مرسل النظام</span>
-            <span class="user-role">مشغّل شحنات</span>
+    <main class="page-shell">
+      <section class="layout-grid">
+        <article class="panel form-panel">
+          <div class="panel-head">
+            <h2>بيانات الصندوق</h2>
+            <p>أدخل الأبعاد والوزن ثم أنشئ الشحنة مباشرة.</p>
           </div>
-        </div>
-      </div>
-    </aside>
 
-    <!-- ========= MAIN ========= -->
-    <div class="main-wrapper">
-
-      <!-- Top bar -->
-      <header class="topbar">
-        <div class="topbar-title">
-          <h1>إنشاء شحنة جديدة</h1>
-          <p>أدخل بيانات الصندوق لإصدار بوليصة شحن سمسا فوراً</p>
-        </div>
-        <div class="topbar-actions">
-          <div class="status-pill">
-            <span class="pulse-dot"></span>
-            متصل بخوادم سمسا
-          </div>
-        </div>
-      </header>
-
-      <!-- Steps indicator -->
-      <div class="steps-bar">
-        <div class="step active">
-          <div class="step-num">١</div>
-          <span>البيانات الأساسية</span>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-num">٢</div>
-          <span>الأبعاد والوزن</span>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-num">٣</div>
-          <span>إصدار البوليصة</span>
-        </div>
-      </div>
-
-      <!-- Form body -->
-      <main class="content-area">
-        <form id="shipmentForm">
-
-          <!-- Card 1 — Basic info -->
-          <div class="form-card">
-            <div class="card-header">
-              <div class="card-icon orange">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M9 12h6M9 16h6M7 4h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <h2 class="card-title">البيانات الأساسية</h2>
-                <p class="card-desc">معلومات الطلب والمحتوى الجمركية</p>
-              </div>
+          <form id="shipmentForm" class="shipment-form">
+            <div class="form-grid">
+              <label>
+                <span>رقم الطلب</span>
+                <input name="orderNumber" type="text" value="1000" required />
+              </label>
+              <label>
+                <span>وصف المحتوى</span>
+                <input
+                  name="contentDescription"
+                  type="text"
+                  value="هدايا"
+                  required
+                />
+              </label>
+              <label>
+                <span>القيمة المصرح بها</span>
+                <input name="declaredValue" type="number" min="1" step="0.01" required />
+              </label>
+              <label>
+                <span>HS Code</span>
+                <input name="itemHSCode" type="text" inputmode="numeric" required />
+              </label>
+              <label>
+                <span>بلد المنشأ</span>
+                <input
+                  name="countryOfOrigin"
+                  type="text"
+                  minlength="2"
+                  maxlength="2"
+                  value="SA"
+                  required
+                />
+              </label>
+              <label>
+                <span>الكمية</span>
+                <input name="itemQuantity" type="number" min="1" step="1" value="1" required />
+              </label>
+              <label>
+                <span>عدد الصناديق</span>
+                <input name="parcels" type="number" min="1" step="1" value="1" />
+              </label>
+              <label>
+                <span>تاريخ الشحن</span>
+                <input name="shipDate" type="datetime-local" />
+              </label>
+              <label>
+                <span>الطول (سم)</span>
+                <input name="lengthCm" type="number" min="1" step="0.1" required />
+              </label>
+              <label>
+                <span>العرض (سم)</span>
+                <input name="widthCm" type="number" min="1" step="0.1" required />
+              </label>
+              <label>
+                <span>الارتفاع (سم)</span>
+                <input name="heightCm" type="number" min="1" step="0.1" required />
+              </label>
+              <label>
+                <span>الوزن (كجم)</span>
+                <input name="actualWeightKg" type="number" min="0" step="0.01" value="0" />
+              </label>
             </div>
 
-            <div class="fields-grid">
-              <div class="field">
-                <label for="orderNumber">رقم الطلب</label>
-                <div class="input-wrap">
-                  <input id="orderNumber" name="orderNumber" type="text" value="1000" required autocomplete="off" />
-                </div>
-              </div>
-              <div class="field">
-                <label for="contentDescription">وصف المحتوى</label>
-                <div class="input-wrap">
-                  <input id="contentDescription" name="contentDescription" type="text" value="هدايا" required autocomplete="off" />
-                </div>
-              </div>
-              <div class="field">
-                <label for="declaredValue">القيمة المصرح بها <span class="label-hint">ر.س</span></label>
-                <div class="input-wrap">
-                  <input id="declaredValue" name="declaredValue" type="number" min="1" step="0.01" required />
-                </div>
-              </div>
-              <div class="field">
-                <label for="itemHSCode">HS Code</label>
-                <div class="input-wrap">
-                  <input id="itemHSCode" name="itemHSCode" type="text" inputmode="numeric" required />
-                </div>
-              </div>
-              <div class="field">
-                <label for="countryOfOrigin">بلد المنشأ</label>
-                <div class="input-wrap">
-                  <input id="countryOfOrigin" name="countryOfOrigin" type="text" minlength="2" maxlength="2" value="SA" required autocomplete="off" />
-                </div>
-              </div>
-              <div class="field">
-                <label for="itemQuantity">الكمية</label>
-                <div class="input-wrap">
-                  <input id="itemQuantity" name="itemQuantity" type="number" min="1" step="1" value="1" required />
-                </div>
-              </div>
+            <div class="actions">
+              <button type="submit" class="button primary">إنشاء الشحنة</button>
             </div>
-          </div>
-
-          <!-- Card 2 — Dimensions -->
-          <div class="form-card">
-            <div class="card-header">
-              <div class="card-icon blue">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M21 7.5l-9-4.5-9 4.5m18 0v9l-9 4.5m-9-13.5v9l9 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <h2 class="card-title">الأبعاد والوزن</h2>
-                <p class="card-desc">مقاسات الصندوق وعدد الطرود</p>
-              </div>
-            </div>
-
-            <div class="fields-grid">
-              <div class="field">
-                <label for="parcels">عدد الصناديق</label>
-                <div class="input-wrap">
-                  <input id="parcels" name="parcels" type="number" min="1" step="1" value="1" />
-                </div>
-              </div>
-              <div class="field">
-                <label for="shipDate">تاريخ الشحن</label>
-                <div class="input-wrap">
-                  <input id="shipDate" name="shipDate" type="datetime-local" />
-                </div>
-              </div>
-
-              <!-- Dimensions trio -->
-              <div class="field field-dims">
-                <label>الأبعاد <span class="label-hint">سم</span></label>
-                <div class="dims-row">
-                  <div class="input-wrap">
-                    <input name="lengthCm" type="number" min="1" step="0.1" required placeholder="الطول" />
-                  </div>
-                  <div class="dims-x">✕</div>
-                  <div class="input-wrap">
-                    <input name="widthCm" type="number" min="1" step="0.1" required placeholder="العرض" />
-                  </div>
-                  <div class="dims-x">✕</div>
-                  <div class="input-wrap">
-                    <input name="heightCm" type="number" min="1" step="0.1" required placeholder="الارتفاع" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="actualWeightKg">الوزن الفعلي <span class="label-hint">كجم</span></label>
-                <div class="input-wrap">
-                  <input id="actualWeightKg" name="actualWeightKg" type="number" min="0" step="0.01" value="0" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Submit strip -->
-          <div class="submit-strip">
-            <p class="submit-hint">✓ سيتم إرسال البيانات مباشرة لخوادم سمسا وإصدار البوليصة فوراً</p>
-            <button type="submit" class="button primary">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              إصدار البوليصة
-            </button>
-          </div>
-
-        </form>
-      </main>
-    </div>
+          </form>
+        </article>
+      </section>
+    </main>
 
     <script src="/app.js"></script>
   </body>

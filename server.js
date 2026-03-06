@@ -104,11 +104,45 @@ app.post("/api/shipments/create", async (req, res) => {
       });
     }
 
+    const invoiceSummary = buildInvoiceSummary(input, summary, parsedBody);
+    let invoiceResult = {
+      success: false,
+      skipped: true
+    };
+
+    if (invoiceSummary) {
+      const invoiceResponse = await fetch(`${smsaConfig.baseUrl}/api/invoice`, {
+        method: "POST",
+        headers: {
+          apikey: smsaConfig.apiKey,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(invoiceSummary.payload)
+      });
+
+      const invoiceRawBody = await invoiceResponse.text();
+      let invoiceParsedBody = invoiceRawBody;
+      try {
+        invoiceParsedBody = JSON.parse(invoiceRawBody);
+      } catch (_error) {
+        // Keep raw text when SMSA returns non-JSON content.
+      }
+
+      invoiceResult = {
+        success: invoiceResponse.ok,
+        skipped: false,
+        smsaStatus: invoiceResponse.status,
+        payload: invoiceSummary.payload,
+        smsaResponse: invoiceParsedBody
+      };
+    }
+
     return res.json({
       message: "Shipment created successfully.",
       calculatedWeight: summary.calculatedWeight,
       payload: summary.payload,
-      smsaResponse: parsedBody
+      smsaResponse: parsedBody,
+      invoiceResult
     });
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -126,6 +160,9 @@ function validateShipmentInput(body) {
     "orderNumber",
     "contentDescription",
     "declaredValue",
+    "itemHSCode",
+    "countryOfOrigin",
+    "itemQuantity",
     "lengthCm",
     "widthCm",
     "heightCm"
@@ -138,6 +175,17 @@ function validateShipmentInput(body) {
   }
 
   const declaredValue = toPositiveNumber(body.declaredValue, "declaredValue");
+  const itemHSCode = String(body.itemHSCode).trim();
+  if (!itemHSCode) {
+    throw new Error('Field "itemHSCode" is required.');
+  }
+
+  const countryOfOrigin = String(body.countryOfOrigin).trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(countryOfOrigin)) {
+    throw new Error('Field "countryOfOrigin" must be a valid 2-letter ISO country code.');
+  }
+
+  const itemQuantity = toInteger(body.itemQuantity, "itemQuantity");
   const lengthCm = toPositiveNumber(body.lengthCm, "lengthCm");
   const widthCm = toPositiveNumber(body.widthCm, "widthCm");
   const heightCm = toPositiveNumber(body.heightCm, "heightCm");
@@ -149,6 +197,9 @@ function validateShipmentInput(body) {
     orderNumber: String(body.orderNumber).trim(),
     contentDescription: String(body.contentDescription).trim(),
     declaredValue,
+    itemHSCode,
+    countryOfOrigin,
+    itemQuantity,
     codAmount: body.codAmount === "" || body.codAmount === undefined
       ? 0
       : toNonNegativeNumber(body.codAmount, "codAmount"),
@@ -203,6 +254,48 @@ function buildShipmentSummary(input) {
     calculatedWeight,
     payload
   };
+}
+
+function buildInvoiceSummary(input, shipmentSummary, smsaResponse) {
+  const awb = extractAwb(smsaResponse);
+  if (!awb) {
+    return null;
+  }
+
+  return {
+    payload: {
+      AWB: awb,
+      Currency: smsaConfig.shipmentCurrency,
+      WeightUnit: "KG",
+      InvoiceDate: formatInvoiceDate(input.shipDate),
+      Items: [
+        {
+          Sequence: 1,
+          ItemHSCode: input.itemHSCode,
+          QuantityUnit: "UNIT",
+          ItemReference: input.orderNumber,
+          ItemDescription: input.contentDescription,
+          Weight: shipmentSummary.calculatedWeight,
+          ItemValue: input.declaredValue,
+          Quantity: input.itemQuantity,
+          CountryOfOrigin: input.countryOfOrigin
+        }
+      ]
+    }
+  };
+}
+
+function extractAwb(smsaResponse) {
+  const awb = smsaResponse?.waybills?.[0]?.awb || smsaResponse?.sawb;
+  return awb ? String(awb).trim() : "";
+}
+
+function formatInvoiceDate(value) {
+  const date = new Date(value);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = date.getUTCFullYear();
+  return `${day}/${month}/${year}`;
 }
 
 function toPositiveNumber(value, field) {

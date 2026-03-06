@@ -47,7 +47,6 @@ elements.form.addEventListener("submit", async (event) => {
 function collectFormData() {
   const formData = new FormData(elements.form);
   return {
-    orderNumber: "1000",
     codAmount: 0,
     actualWeightKg: 0,
     ...Object.fromEntries(formData.entries())

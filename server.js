@@ -115,9 +115,11 @@ app.post("/api/shipments/create", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`SMSA app listening on http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`SMSA app listening on http://localhost:${port}`);
+  });
+}
 
 function validateShipmentInput(body) {
   const requiredFields = [
@@ -237,3 +239,5 @@ function parseBoolean(value, defaultValue) {
   }
   return String(value).toLowerCase() === "true";
 }
+
+module.exports = app;
